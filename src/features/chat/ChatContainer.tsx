@@ -1,17 +1,23 @@
-import { useEffect, useRef } from "react";
-import { ChatMessage } from "./ChatMessage";
-import { ChatInput } from "./ChatInput";
+import { useRef } from "react";
 import { useChat } from "../../hooks/useChat";
+import { ChatInput } from "./ChatInput";
+import { ChatMessage } from "./ChatMessage";
+
+function useScrollToBottom(dep: number) {
+  const ref = useRef<HTMLDivElement>(null);
+  const prevDep = useRef(dep);
+  if (dep !== prevDep.current) {
+    prevDep.current = dep;
+    queueMicrotask(() => {
+      ref.current?.scrollTo({ top: ref.current.scrollHeight });
+    });
+  }
+  return ref;
+}
 
 export function ChatContainer() {
   const { messages, isLoading, sendMessage } = useChat();
-  const scrollRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    if (scrollRef.current) {
-      scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
-    }
-  }, [messages]);
+  const scrollRef = useScrollToBottom(messages.length);
 
   return (
     <div className="flex flex-col h-full">
@@ -23,9 +29,7 @@ export function ChatContainer() {
         {messages.length === 0 ? (
           <div className="flex-1 flex items-center justify-center h-full">
             <div className="text-center">
-              <p className="text-text-muted text-sm">
-                Ask anything about your codebase
-              </p>
+              <p className="text-text-muted text-sm">Ask anything about your codebase</p>
             </div>
           </div>
         ) : (
