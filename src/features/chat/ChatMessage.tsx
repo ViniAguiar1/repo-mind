@@ -12,10 +12,7 @@ export function ChatMessage({ message }: ChatMessageProps) {
       <div
         className={`
           max-w-[70%] px-3.5 py-2.5 rounded-xl text-sm leading-relaxed
-          ${isUser
-            ? "bg-user-bubble text-white"
-            : "bg-bg-tertiary text-text-primary"
-          }
+          ${isUser ? "bg-user-bubble text-white" : "bg-bg-tertiary text-text-primary"}
         `}
       >
         {message.content}

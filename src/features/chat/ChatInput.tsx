@@ -1,4 +1,4 @@
-import { useState, useRef, useCallback } from "react";
+import { useCallback, useRef, useState } from "react";
 
 interface ChatInputProps {
   onSend: (message: string) => void;
@@ -30,7 +30,7 @@ export function ChatInput({ onSend, disabled }: ChatInputProps) {
     setValue(e.target.value);
     const el = e.target;
     el.style.height = "auto";
-    el.style.height = Math.min(el.scrollHeight, 160) + "px";
+    el.style.height = `${Math.min(el.scrollHeight, 160)}px`;
   };
 
   return (
@@ -47,6 +47,7 @@ export function ChatInput({ onSend, disabled }: ChatInputProps) {
           className="flex-1 bg-transparent text-sm text-text-primary placeholder-text-muted resize-none outline-none py-1 max-h-40"
         />
         <button
+          type="button"
           onClick={handleSubmit}
           disabled={disabled || !value.trim()}
           className="px-3 py-1.5 bg-accent hover:bg-accent-hover disabled:opacity-30 disabled:cursor-not-allowed text-white text-xs font-medium rounded-lg transition-colors cursor-pointer"

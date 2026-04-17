@@ -1,5 +1,5 @@
-import { MainLayout } from "./layouts/MainLayout";
 import { ChatContainer } from "./features/chat/ChatContainer";
+import { MainLayout } from "./layouts/MainLayout";
 
 function App() {
   return (
